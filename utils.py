@@ -78,25 +78,6 @@ def smooth_angles(angles):
 
     return cos_angles
 
-def radians_to_degrees(x):
-    deg = math.degrees(x) % 360
-    return deg
-
-def calculate_singularities(angles, tolerance):
-    apply_to_each_pixel(angles, lambda x: radians_to_degrees(x))
-    # apply_kernel(angles, [[1, 1, 1], [1, 0, 1], [1, 1, 1]])
-
-    for i in range(1, len(angles) - 1):
-        for j in range(1, len(angles[i]) - 1):
-            pixel = angles[i][j]
-            if 180 - tolerance <= pixel and pixel <= 180 + tolerance:
-                print i, j, "loop"
-            if -180 - tolerance <= pixel and pixel <= -180 + tolerance:
-                print i, j, "delta"
-            if 360 - tolerance <= pixel and pixel <= 360 + tolerance:
-                print i, j, "whorl"
-            # print i, j, radians_to_degrees(pixel)
-
 def draw_lines(im, angles, W):
     (x, y) = im.size
     result = im.convert("RGB")
