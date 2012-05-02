@@ -78,6 +78,15 @@ def smooth_angles(angles):
 
     return cos_angles
 
+def get_line_ends(i, j, W, tang):
+    if -1 <= tang and tang <= 1:
+        begin = (i, (-W/2) * tang + j + W/2)
+        end = (i + W, (W/2) * tang + j + W/2)
+    else:
+        begin = (i + W/2 + W/(2 * tang), j + W/2)
+        end = (i + W/2 - W/(2 * tang), j - W/2)
+    return (begin, end)
+
 def draw_lines(im, angles, W):
     (x, y) = im.size
     result = im.convert("RGB")
@@ -88,13 +97,7 @@ def draw_lines(im, angles, W):
         for j in range(1, y, W):
             tang = math.tan(angles[(i - 1) / W][(j - 1) / W])
 
-            if -1 <= tang and tang <= 1:
-                begin = (i, (-W/2) * tang + j + W/2)
-                end = (i + W, (W/2) * tang + j + W/2)
-            else:
-                begin = (i + W/2 + W/(2 * tang), j + W/2)
-                end = (i + W/2 - W/(2 * tang), j - W/2)
-
+            (begin, end) = get_line_ends(i, j, W, tang)
             draw.line([begin, end], fill=150)
 
     del draw
