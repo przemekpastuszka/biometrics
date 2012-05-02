@@ -7,12 +7,21 @@ import argparse
 import math
 
 def points_on_line(line, W):
+    im = Image.new("L", (W, W), 100)
+    draw = ImageDraw.Draw(im)
+    draw.line([(0, line(0)), (W, line(W))], fill=10)
+    im_load = im.load()
+
     points = []
     for x in range(0, W):
-        y = round(line(x))
-        if 0 <= y and y < W:
-            points.append((x, y))
-    print points
+        for y in range(0, W):
+            if im_load[x, y] == 10:
+               points.append((x, y))
+
+    del draw
+    del im
+
+    #~ print points
     return points
 
 def ortho_vec_and_step(tang, W):
@@ -23,7 +32,7 @@ def ortho_vec_and_step(tang, W):
     (x_norm, y_norm) = (x_vec / length, y_vec / length)
     step = length / W
 
-    print (x_norm, y_norm, step)
+    #~ print (x_norm, y_norm, step)
     return (x_norm, y_norm, step)
 
 def block_frequency(i, j, W, angle, im_load):
@@ -32,28 +41,42 @@ def block_frequency(i, j, W, angle, im_load):
     (x_norm, y_norm, step) = ortho_vec_and_step(tang, W)
     (x_corner, y_corner) = (0 if x_norm >= 0 else W, 0 if y_norm >= 0 else W)
 
-    treshold = 0
+    grey_levels = []
 
+    for k in range(0, W):
+        line = lambda x: (x - x_norm * k * step - x_corner) * tang + y_norm * k * step + y_corner
+        points = points_on_line(line, W)
+        level = 0
+        for point in points:
+            level += 255.0 - im_load[point[0] + i * W, point[1] + j * W]
+        grey_levels.append(level)
+
+    print grey_levels
+
+    treshold = 0
+    thr2 = 2500
     upward = False
     last_level = 0
     count = 0.0
     spaces = 0.0
     dist = 0
-    for i in range(0, W):
-        line = lambda x: (x - x_norm * i * step - x_corner) * tang + y_norm * i * step + y_corner
-        points = points_on_line(line, W)
-        level = 0
-        for point in points:
-            level += im_load[point[0] + i * W, point[1] + j * W]
+    for level in grey_levels:
         if upward and level + treshold < last_level:
             upward = False
-            count += 1
-            spaces += dist - 1
-            dist = 1
+            if last_level > thr2:
+                count += 1
+                spaces += dist - 1
+                dist = 1
         if level > last_level + treshold:
             upward = True
         last_level = level
         dist += 1
+
+    if upward and last_level > thr2:
+        count += 1
+        spaces += dist - 1
+
+    print count, spaces
 
     return count / spaces if spaces > 0 else 0
 
@@ -66,7 +89,7 @@ def freq(im, W, angles):
         for j in range(0, y / W):
             freq = block_frequency(i, j, W, angles[i][j], im_load)
             box = (i * W, j * W, min(i * W + W, x), min(j * W + W, y))
-            freq_img.paste(freq * 255, box)
+            freq_img.paste(freq * 255.0, box)
 
     return freq_img
 
