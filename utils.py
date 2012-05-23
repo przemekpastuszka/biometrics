@@ -26,7 +26,7 @@ def calculate_angles(im, W, f, g):
     get_pixel = lambda x, y: im_load[x, y]
 
     ySobel = sobel.sobelOperator
-    xSobel = sobel.transpose(sobel.sobelOperator)
+    xSobel = transpose(sobel.sobelOperator)
 
     result = [[] for i in range(1, x, W)]
 
@@ -45,22 +45,34 @@ def calculate_angles(im, W, f, g):
 
     return result
 
+def flatten(ls):
+    return reduce(lambda x, y: x + y, ls, [])
+
+def transpose(ls):
+    return map(list, zip(*ls))
+
 def gauss(x, y):
     ssigma = 1.0
     return (1 / (2 * math.pi * ssigma)) * math.exp(-(x * x + y * y) / (2 * ssigma))
 
-def gauss_kernel(size):
+def kernel_from_function(size, f):
     kernel = [[] for i in range(0, size)]
     for i in range(0, size):
         for j in range(0, size):
-            kernel[i].append(gauss(i - size / 2, j - size / 2))
+            kernel[i].append(f(i - size / 2, j - size / 2))
     return kernel
 
+def gauss_kernel(size):
+    return kernel_from_function(size, gauss)
+
 def apply_kernel(pixels, kernel):
+    apply_kernel_with_f(pixels, kernel, lambda old, new: new)
+
+def apply_kernel_with_f(pixels, kernel, f):
     size = len(kernel)
     for i in range(size / 2, len(pixels) - size / 2):
         for j in range(size / 2, len(pixels[i]) - size / 2):
-            pixels[i][j] = apply_kernel_at(lambda x, y: pixels[x][y], kernel, i, j)
+            pixels[i][j] = f(pixels[i][j], apply_kernel_at(lambda x, y: pixels[x][y], kernel, i, j))
 
 def smooth_angles(angles):
     cos_angles = copy.deepcopy(angles)
@@ -77,6 +89,26 @@ def smooth_angles(angles):
             cos_angles[i][j] = (math.atan2(sin_angles[i][j], cos_angles[i][j])) / 2
 
     return cos_angles
+
+def load_image(im):
+    (x, y) = im.size
+    im_load = im.load()
+
+    result = []
+    for i in range(0, x):
+        result.append([])
+        for j in range(0, y):
+            result[i].append(im_load[i, j])
+
+    return result
+
+def load_pixels(im, pixels):
+    (x, y) = im.size
+    im_load = im.load()
+
+    for i in range(0, x):
+        for j in range(0, y):
+            im_load[i, j] = pixels[i][j]
 
 def get_line_ends(i, j, W, tang):
     if -1 <= tang and tang <= 1:

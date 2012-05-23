@@ -8,6 +8,8 @@ import math
 
 signum = lambda x: -1 if x < 0 else 1
 
+cells = [(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1)]
+
 def get_angle(left, right):
     angle = left - right
     if abs(angle) > 180:
@@ -15,9 +17,7 @@ def get_angle(left, right):
     return angle
 
 def poincare_index_at(i, j, angles, tolerance):
-    cells = [(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1)]
     deg_angles = [math.degrees(angles[i - k][j - l]) % 180 for k, l in cells]
-
     index = 0
     for k in range(0, 8):
         if abs(get_angle(deg_angles[k], deg_angles[k + 1])) > 90:
@@ -32,7 +32,7 @@ def poincare_index_at(i, j, angles, tolerance):
         return "whorl"
     return "none"
 
-def calculate_singularities(angles, tolerance, W):
+def calculate_singularities(im, angles, tolerance, W):
     (x, y) = im.size
     result = im.convert("RGB")
 
@@ -44,7 +44,7 @@ def calculate_singularities(angles, tolerance, W):
         for j in range(1, len(angles[i]) - 1):
             singularity = poincare_index_at(i, j, angles, tolerance)
             if singularity != "none":
-                draw.ellipse([(i * W, j * W), ((i + 1) * W, (j + 1) * W)], fill = colors[singularity])
+                draw.ellipse([(i * W, j * W), ((i + 1) * W, (j + 1) * W)], outline = colors[singularity])
 
     del draw
 
@@ -69,5 +69,5 @@ angles = utils.calculate_angles(im, W, f, g)
 if args.smooth:
     angles = utils.smooth_angles(angles)
 
-result = calculate_singularities(angles, int(args.tolerance[0]), W)
+result = calculate_singularities(im, angles, int(args.tolerance[0]), W)
 result.show()

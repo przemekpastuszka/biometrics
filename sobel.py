@@ -3,14 +3,9 @@
 
 from PIL import Image, ImageFilter
 from math import sqrt
+import utils
 
 sobelOperator = [[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]]
-
-def flatten(ls):
-    return reduce(lambda x, y: x + y, ls, [])
-
-def transpose(ls):
-    return map(list, zip(*ls))
 
 def merge_images(a, b, f):
     result = a.copy()
@@ -26,8 +21,8 @@ def merge_images(a, b, f):
     return result
 
 def partial_sobels(im):
-    ySobel = im.filter(ImageFilter.Kernel((3, 3), flatten(sobelOperator), 1))
-    xSobel = im.filter(ImageFilter.Kernel((3, 3), flatten(transpose(sobelOperator)), 1))
+    ySobel = im.filter(ImageFilter.Kernel((3, 3), utils.flatten(sobelOperator), 1))
+    xSobel = im.filter(ImageFilter.Kernel((3, 3), utils.flatten(utils.transpose(sobelOperator)), 1))
     return (xSobel, ySobel)
 
 def full_sobels(im):
