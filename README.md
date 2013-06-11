@@ -35,3 +35,11 @@ The python script will mark the singularities with circles:
 * blue for whorl
       
 Example: ```python poincare.py images/ppf1.png 16 1 --smooth```
+
+Original fingerprint:
+![original fingerprint](http://github.com/rtshadow/biometrics/tree/master/images/ppf1.png)
+
+With singular points marked by algorithm:
+![poincare](http://github.com/rtshadow/biometrics/tree/master/images/ppf1_poincare.gif)
+
+Note: algorithm marked singular points not only inside fingerprint itself, but on its edges and even outside. This is a result of usage of non-preprocessed image - if the image was enhanced (better contrast, background removed), then only singular points inside fingerprint would be marked.
