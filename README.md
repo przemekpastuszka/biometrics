@@ -56,9 +56,9 @@ Example: ```python thining.py images/ppf1_enhanced.gif --save```
 Images:
 * Before
 
-![before](https://github.com/rtshadow/biometrics/blob/master/images/ppf1_enhanced.gif)
+![before](https://raw.github.com/rtshadow/biometrics/master/images/ppf1_enhanced.gif)
 
 * After:
 
-![after](https://github.com/rtshadow/biometrics/blob/master/images/ppf1_enhanced_thinned.gif)
+![after](https://raw.github.com/rtshadow/biometrics/master/images/ppf1_enhanced_thinned.gif)
 
