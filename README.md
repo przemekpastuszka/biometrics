@@ -49,7 +49,7 @@ Note: algorithm marked singular points not only inside fingerprint itself, but o
 
 ### Thinning (skeletonization)
 
-How it [works] (http://bme.med.upatras.gr/improc/Morphological%20operators.htm)
+How it [works] (http://bme.med.upatras.gr/improc/Morphological%20operators.htm#Thining)
 
 Example: ```python thining.py images/ppf1_enhanced.gif --save```
 
