@@ -37,8 +37,13 @@ The python script will mark the singularities with circles:
 Example: ```python poincare.py images/ppf1.png 16 1 --smooth```
 
 Images:
-* Original ![fingerprint](http://raw.github.com/rtshadow/biometrics/tree/master/images/ppf1.png)
-* With singular points marked by algorithm: ![poincare](http://github.com/rtshadow/biometrics/tree/master/images/ppf1_poincare.gif)
+* Original 
+
+![fingerprint](https://raw.github.com/rtshadow/biometrics/master/images/ppf1.png)
+
+* With singular points marked by algorithm: 
+
+![poincare](https://raw.github.com/rtshadow/biometrics/master/images/ppf1_poincare.gif)
 
 Note: algorithm marked singular points not only inside fingerprint itself, but on its edges and even outside. This is a result of usage of non-preprocessed image - if the image was enhanced (better contrast, background removed), then only singular points inside fingerprint would be marked.
 
@@ -49,6 +54,11 @@ How it [works] (http://bme.med.upatras.gr/improc/Morphological%20operators.htm)
 Example: ```python thining.py images/ppf1_enhanced.gif --save```
 
 Images:
-* ![before](http://github.com/rtshadow/biometrics/tree/master/images/ppf1_enhanced.gif)
-* ![after](http://github.com/rtshadow/biometrics/tree/master/images/ppf1_enhanced_thinned.gif)
+* Before
+
+![before](https://github.com/rtshadow/biometrics/blob/master/images/ppf1_enhanced.gif)
+
+* After:
+
+![after](https://github.com/rtshadow/biometrics/blob/master/images/ppf1_enhanced_thinned.gif)
 
