@@ -72,4 +72,4 @@ First, you'll need thinned (skeleton) image (refer to previous section how to ge
     
 Example: ```python crossing_number.py images/ppf1_enhanced_thinned.gif --save```
 
-![minutiae](https://raw.github.com/rtshadow/biometrics/master/images/ppf1_enhanced_thinned.gif)
+![minutiae](https://raw.github.com/rtshadow/biometrics/master/images/ppf1_enhanced_thinned_minutiae.gif)
