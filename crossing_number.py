@@ -5,6 +5,7 @@ from PIL import Image, ImageDraw
 import utils
 import argparse
 import math
+import os
 
 cells = [(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1)]
 
@@ -47,6 +48,7 @@ def calculate_minutiaes(im):
 
 parser = argparse.ArgumentParser(description="Minutiae detection using crossing number method")
 parser.add_argument("image", nargs=1, help = "Skeleton image")
+parser.add_argument("--save", action='store_true', help = "Save result image as src_minutiae.gif")
 args = parser.parse_args()
 
 im = Image.open(args.image[0])
@@ -54,3 +56,7 @@ im = im.convert("L")  # covert to grayscale
 
 result = calculate_minutiaes(im)
 result.show()
+
+if args.save:
+    base_image_name = os.path.splitext(os.path.basename(args.image[0]))[0]
+    result.save(base_image_name + "_minutiae.gif", "GIF")

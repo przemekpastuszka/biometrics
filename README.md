@@ -62,3 +62,14 @@ Images:
 
 ![after](https://raw.github.com/rtshadow/biometrics/master/images/ppf1_enhanced_thinned.gif)
 
+### Minutiae recognition (crossing number method)
+Crossing number methods is a really simple way to detect ridge endings and ridge bifurcations.
+
+First, you'll need thinned (skeleton) image (refer to previous section how to get it). Then the crossing number algorithm will look at 3x3 pixel blocks:
+* if middle pixel is black (represents ridge):
+    * if pixel on boundary are crossed with the ridge once, then we've found ridge ending
+    * if pixel on boundary are crossed with the ridge three times, then we've found ridge bifurcation
+    
+Example: ```python crossing_number.py images/ppf1_enhanced_thinned.gif --save```
+
+![minutiae](https://raw.github.com/rtshadow/biometrics/master/images/ppf1_enhanced_thinned.gif)
