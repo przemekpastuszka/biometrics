@@ -75,7 +75,7 @@ def block_frequency(i, j, W, angle, im_load):
 def freq(im, W, angles):
     (x, y) = im.size
     im_load = im.load()
-    freqs = [[0] for i in range(0, x, W)]
+    freqs = [[0] for i in range(0, x / W)]
 
     for i in range(1, x / W - 1):
         for j in range(1, y / W - 1):
