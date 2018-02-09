@@ -38,11 +38,11 @@ def gabor(im, W, angles):
             kernel = gabor_kernel(W, angles[i][j], freqs[i][j])
             for k in range(0, W):
                 for l in range(0, W):
-                    im_load[i * W + k, j * W + l] = utils.apply_kernel_at(
+                    im_load[i * W + k, j * W + l] = int(utils.apply_kernel_at(
                         lambda x, y: im_load[x, y],
                         kernel,
                         i * W + k,
-                        j * W + l)
+                        j * W + l))
 
     return im
 
@@ -54,11 +54,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     im = Image.open(args.image[0])
+    W = int(args.block_size[0])
+    
     im = im.convert("L")  # covert to grayscale
     im.show()
-
-    W = int(args.block_size[0])
-
+    (x,y)=im.size
+    im=im.resize((x+W-x%W,y+W-y%W))
+    
     f = lambda x, y: 2 * x * y
     g = lambda x, y: x ** 2 - y ** 2
 

@@ -16,7 +16,7 @@ def merge_images(a, b, f):
     (x, y) = a.size
     for i in range(0, x):
         for j in range(0, y):
-            result_load[i, j] = f(a_load[i, j], b_load[i, j])
+            result_load[i, j] = (f(a_load[i, j], b_load[i, j]),)
 
     return result
 

@@ -16,7 +16,7 @@ def create_segmented_and_variance_images(im, W, threshold):
         for j in range(0, y, W):
             box = (i, j, min(i + W, x), min(j + W, y))
             block_stddev = ImageStat.Stat(im.crop(box)).stddev[0]
-            variance_image.paste(block_stddev, box)
+            variance_image.paste((block_stddev,), box)
             if block_stddev < threshold:
                 segmented_image.paste(0, box)  # make block black if rejected
     return (segmented_image, variance_image)
