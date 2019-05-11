@@ -108,7 +108,7 @@ def load_pixels(im, pixels):
 
     for i in range(0, x):
         for j in range(0, y):
-            im_load[i, j] = pixels[i][j]
+            im_load[i, j] = int(pixels[i][j])
 
 def get_line_ends(i, j, W, tang):
     if -1 <= tang and tang <= 1:
