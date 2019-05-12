@@ -76,4 +76,4 @@ result.show()
 
 if args.save:
     base_image_name = os.path.splitext(os.path.basename(args.image[0]))[0]
-    result.save(base_image_name + "_poincare.gif", "GIF")
+    result.save("images/"+base_image_name + "_poincare.gif", "GIF")
