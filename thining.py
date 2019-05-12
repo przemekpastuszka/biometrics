@@ -78,4 +78,4 @@ if __name__ == "__main__":
 
     if args.save:
         base_image_name = os.path.splitext(os.path.basename(args.image[0]))[0]
-        im.save(base_image_name + "_thinned.gif", "GIF")
+        im.save("images/"+base_image_name + "_thinned.gif", "GIF")
