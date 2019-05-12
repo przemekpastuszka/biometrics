@@ -38,11 +38,11 @@ def gabor(im, W, angles):
             kernel = gabor_kernel(W, angles[i][j], freqs[i][j])
             for k in range(0, W):
                 for l in range(0, W):
-                    im_load[i * W + k, j * W + l] = utils.apply_kernel_at(
+                    im_load[i * W + k, j * W + l] = int(utils.apply_kernel_at(
                         lambda x, y: im_load[x, y],
                         kernel,
                         i * W + k,
-                        j * W + l)
+                        j * W + l))
 
     return im
 
@@ -73,4 +73,4 @@ if __name__ == "__main__":
 
     if args.save:
         base_image_name = os.path.splitext(os.path.basename(args.image[0]))[0]
-        im.save(base_image_name + "_enhanced.gif", "GIF")
+        im.save("images/"+base_image_name + "_enhanced.gif", "GIF")
