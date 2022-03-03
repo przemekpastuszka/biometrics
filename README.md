@@ -9,10 +9,10 @@ Some implementations of fingerprint recognition algorithms developed for Biometr
 
 ### Prerequisites
 * python 2.7
-* python imaging library (PIL)
+* python imaging library (PIL) | `sudo apt install python-pillow`
 
 ### How to use it
-Simply do ```python filename.py --help``` to figure out how to execute ```filename``` algorithm
+Simply do ```python2 filename.py --help``` to figure out how to execute ```filename``` algorithm
 
 ## Algorithms
 
